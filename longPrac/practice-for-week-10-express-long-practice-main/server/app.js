@@ -8,6 +8,15 @@ app.use('/static', express.static('assets'));
 
 app.use(express.json())
 
+app.use((req,res,next) => {
+  console.log(req.method);
+  console.log(req.url);
+  res.on('finish', () => {
+    console.log(res.statusCode)
+  })
+  next();
+})
+
 // For testing purposes, GET /
 app.get('/', (req, res) => {
   res.json("Express server running. No content provided at root level. Please use another route.");
