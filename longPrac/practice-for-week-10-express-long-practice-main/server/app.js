@@ -3,6 +3,8 @@ require('express-async-errors');
 // const User = require('./models/user');
 const app = express();
 
+const dogRouter = require('./routes/dogs.js')
+app.use(dogRouter);
 
 app.use('/static', express.static('assets'));
 
@@ -42,5 +44,5 @@ app.use((req, res, next) => {
   throw error
 })
 
-const port = 5001;
+const port = 5002;
 app.listen(port, () => console.log('Server is listening on port', port));
