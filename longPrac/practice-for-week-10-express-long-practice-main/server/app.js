@@ -10,12 +10,14 @@ app.use(express.json())
 
 app.use((req,res,next) => {
   console.log(req.method);
-  console.log(req.url);
+  console.log(req.originalUrl);
   res.on('finish', () => {
     console.log(res.statusCode)
   })
   next();
 })
+
+
 
 // For testing purposes, GET /
 app.get('/', (req, res) => {
@@ -33,6 +35,12 @@ app.post('/test-json', (req, res, next) => {
 app.get('/test-error', async (req, res) => {
   throw new Error("Hello World!")
 });
+
+app.use((req, res, next) => {
+  const error = new Error("The requested resource couldn't be found.")
+  error.status = 404
+  throw error
+})
 
 const port = 5001;
 app.listen(port, () => console.log('Server is listening on port', port));
