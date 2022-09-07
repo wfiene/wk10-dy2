@@ -1,11 +1,17 @@
 const express = require('express');
+require('express-async-errors');
+// const User = require('./models/user');
 const app = express();
+
+
+app.use('/static', express.static('assets'));
+
+app.use(express.json())
 
 // For testing purposes, GET /
 app.get('/', (req, res) => {
   res.json("Express server running. No content provided at root level. Please use another route.");
 });
-
 // For testing express.json middleware
 app.post('/test-json', (req, res, next) => {
   // send the body as JSON with a Content-Type header of "application/json"
@@ -19,5 +25,5 @@ app.get('/test-error', async (req, res) => {
   throw new Error("Hello World!")
 });
 
-const port = 5000;
+const port = 5001;
 app.listen(port, () => console.log('Server is listening on port', port));
